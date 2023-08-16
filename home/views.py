@@ -1,10 +1,15 @@
-from django.shortcuts import render, HttpResponse
-from django.views import View
+# from rest_framework.decorators import api_view
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
 
+# methods that are available
+# @api_view(['GET', 'POST', 'PUT'])
+# def home(request):
+#     # send a dict
+#     return Response({'name': 'mahdi'})
 
-class Home(View):
-    template_name = 'home/home.html'
 
+class Home(APIView):
     def get(self, request):
-        return render(request, self.template_name)
+        return Response({'name': 'mahdi'})
