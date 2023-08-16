@@ -29,5 +29,6 @@ class Home(APIView):
 class Serializer(APIView):
     def get(self, request):
         persons = Person.objects.all()
-        se_data = PersonSerilizer(instance=persons, many=True)
-        return Response(data=se_data.data)
+        # in here (instance): serializer is used to convert to json
+        ser_data = PersonSerilizer(instance=persons, many=True)
+        return Response(data=ser_data.data)

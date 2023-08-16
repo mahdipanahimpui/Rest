@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     # local apps
     'home.apps.HomeConfig',
+    'accounts.apps.AccountsConfig',
 
     # third party apps
     'rest_framework',
@@ -137,9 +138,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 
-
-
-
+# for csrf_token error use below code
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ]
+}
 
 
 
