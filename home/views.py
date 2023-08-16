@@ -1,6 +1,8 @@
 # from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from .models import Person
+from .serializers import PersonSerilizer
 
 
 # methods that are available
@@ -20,3 +22,12 @@ class Home(APIView):
     def post(self, request):
         name = request.data['name'] # getting the data that is sent by post
         return Response({'name': f'your name: {name}'})
+
+
+
+
+class Serializer(APIView):
+    def get(self, request):
+        persons = Person.objects.all()
+        se_data = PersonSerilizer(instance=persons, many=True)
+        return Response(data=se_data.data)
