@@ -11,5 +11,12 @@ from rest_framework.response import Response
 
 
 class Home(APIView):
-    def get(self, request):
-        return Response({'name': 'mahdi'})
+    def get(self, request): 
+        # get(self, request, name) getting params from url /mahdi, in path /<str:name>
+        # get the query_params ?name=mahdi
+        name = request.query_params['name']
+        return Response({'name': f'your name: {name}'})
+    
+    def post(self, request):
+        name = request.data['name'] # getting the data that is sent by post
+        return Response({'name': f'your name: {name}'})

@@ -5,5 +5,5 @@ app_name = 'home'
 
 urlpatterns = [
     # path('', views.home, name='home')
-    path('', views.Home.as_view(), name='home')
+    path('', views.Home.as_view(), name='home') # endpoint
 ]
