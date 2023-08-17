@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     # third party apps
     'rest_framework',
     # 'rest_framework.authtoken',
-    'rest_framework_simplejwt' # doesnt need migrate, because is used in local storage of browser
+    'rest_framework_simplejwt', # doesnt need migrate, because is used in local storage of browser
+    'drf_spectacular',
      
     
 ]
@@ -171,6 +172,11 @@ REST_FRAMEWORK = {
     'DEFAULT_THROTTLE_RATES': {
         'question_throttle': '5/minute',
     },
+
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+
+
+
 }
 
 
@@ -235,3 +241,13 @@ SIMPLE_JWT = {
 # a multi-form
 # refresh <refresh-token>
 
+
+
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Project API',
+    'DESCRIPTION': 'API GUIDE',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    # OTHER SETTINGS
+}

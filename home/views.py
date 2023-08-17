@@ -48,7 +48,7 @@ class Serializer(APIView):
 
 
 class QuestionListView(APIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     # throttle_classes = [AnonRateThrottle, UserRateThrottle]
     # throttle_scope = 'question_throttle'
 
@@ -61,6 +61,10 @@ class QuestionListView(APIView):
 
 
 class QuestionCreateView(APIView):
+    """
+        note: this view create question
+    """
+    serializer_class = QuestionSerializer
 
     def post(self, request):
         sre_data = QuestionSerializer(data=request.data)

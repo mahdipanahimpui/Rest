@@ -1,0 +1,69 @@
+using Schema:
+
+generating schema:
+    >> pip install pyyaml uritemplate
+
+    from rest_framework.schemas import get_schema_view
+
+    urlpatterns = [
+        # ...
+        # Use the `get_schema_view()` helper to add a `SchemaView` to project URLs.
+        #   * `title` and `description` parameters are passed to `SchemaGenerator`.
+        #   * Provide view name for use with `reverse()`.
+        path('schema', get_schema_view(
+            title="Your Project",
+            description="API for all things …",
+            version="1.0.0"
+        ), name='openapi-schema'),
+        # ...
+    ]
+
+
+by url .../schema/ can see doc
+
+NOTE: the view that has permision isAuthenticated not allowd for not authenticated users
+
+
+
+
+
+## to visualize better use DRF-SPECTACULAR
+
+    >> pip install drf-spectacular
+
+    add 'drf-spectacular' to settings.py in INSTALLED_APPS
+
+
+    in settings.py:
+
+    REST_FRAMEWORK = {
+        # YOUR SETTINGS
+        'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    }
+
+
+    SPECTACULAR_SETTINGS = {
+        'TITLE': 'Your Project API',
+        'DESCRIPTION': 'Your project description',
+        'VERSION': '1.0.0',
+        'SERVE_INCLUDE_SCHEMA': False,
+        # OTHER SETTINGS
+    }
+
+
+    in urls.py:
+
+    from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
+    urlpatterns = [
+        # YOUR PATTERNS
+        path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+        # Optional UI:
+        path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+        path('api/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
+    ]
+
+
+
+    NOTE:
+        add doc string in views
+        add serializer_class = <class>Serializer_name
