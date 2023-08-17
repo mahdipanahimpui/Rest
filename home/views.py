@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from .models import Person, Question, Answer
 from .serializers import PersonSerilizer, QuestionSerializer, AnswerSerializer
 from rest_framework.permissions import IsAuthenticated
+from . permissions import IsOwnerOrReadOnly
 from rest_framework import status
 
 # methods that are available
@@ -66,9 +67,11 @@ class QuestionCreateView(APIView):
 
 
 class QuestionUpdateView(APIView):
+    permission_classes = [IsAuthenticated, IsOwnerOrReadOnly] # IsAuthenticated needs token in header, if not exsit create by url
 
     def put(self, request, pk):
         question = get_object_or_404(Question, pk=pk)
+        self.check_object_permissions(request, question) # to force the instance-level to check
         sre_data = QuestionSerializer(instance=question, data=request.data, partial=True) # partial becaouse of update a part of obj not all
         if sre_data.is_valid():
             sre_data.save()

@@ -136,9 +136,6 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-
-
-
 # for csrf_token error use below code
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
