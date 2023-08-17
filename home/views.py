@@ -76,7 +76,7 @@ class QuestionUpdateView(APIView):
         if sre_data.is_valid():
             sre_data.save()
             return Response(sre_data.data, status=status.HTTP_200_OK) 
-        return Response(sre_data.errors, status=status_HTTP_400_BAD_REQUEST)
+        return Response(sre_data.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 

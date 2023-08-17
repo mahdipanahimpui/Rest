@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Question, Answer
+from .custom_relational_fields import UserEmailNameRelationalField
 
 # modelname + Serialiazer
 class PersonSerilizer(serializers.Serializer):
@@ -12,7 +13,14 @@ class PersonSerilizer(serializers.Serializer):
 
 
 class QuestionSerializer(serializers.ModelSerializer):
-    answers = serializers.SerializerMethodField()
+    # answers = serializers.SerializerMethodField()
+    # user field is exists in Question model as a relation, to customize the presentation usse serializer-relation
+    # user = serializers.StringRelatedField(read_only=True) # return the __str__
+    # user = serializers.PrimaryKeyRelatedField(read_only=True) # the default thread
+    # user = serializers.SlugRelatedField(read_only=True, slug_field='email') # to use other field
+
+    # for custom serializer_relation use custom relational fields 
+    user = UserEmailNameRelationalField(read_only=True)
 
     class Meta:
         model = Question
