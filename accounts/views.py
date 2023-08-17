@@ -6,6 +6,8 @@ from .serializers import UserRegisterSerializer, UserSerializer
 from rest_framework import status
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.pagination import PageNumberPagination
+from django.core.paginator import Paginator
 
 
 class UserRegisterView(APIView):
@@ -81,3 +83,13 @@ class UserViewSet(viewsets.ViewSet):  # about def action see router docs
 
 
 
+class TestUserPagination(APIView):
+
+    def get(self, request):
+
+        queryset = User.objects.all()
+        page_number = self.request.query_params.get('page', 1)
+        page_size = self.request.query_params.get('limit', 1)
+        paginator = Paginator(queryset, page_size)
+        sre_data = UserSerializer(instance=paginator.page(page_number), many=True)
+        return Response(data=sre_data.data)

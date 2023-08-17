@@ -9,7 +9,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 app_name = 'accounts'
 urlpatterns = [
     path('register', views.UserRegisterView.as_view(), name='user_register'),
-    
+    path('user_pagiantion/', views.TestUserPagination.as_view(), name='user_pagiantion')
 ]
 
 

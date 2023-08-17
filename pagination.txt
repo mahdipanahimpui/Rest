@@ -1,0 +1,58 @@
+paginations:
+
+
+automatic paginations like LimitOffsetPagination, and PageNumberPagination:
+like GenericAPIView and ModelViewSet
+
+
+PageNumberPagination:
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 100
+}
+
+cant change the page_size form url
+send .../?page=3
+
+
+
+LimitOffsetPagination:
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 100
+}
+
+offset: left the offset number at first
+limit: show the limit number obj after offset
+can change both in url, defualt page_size(limit) can be.
+.../?limit=2&offset=3
+
+
+
+
+
+######## MANUALLY ##########
+to set pagination manully on views that inherited from viewsets and APIView 
+
+in views.py
+from rest_framework.pagination import PageNumberPagination
+from django.core.paginator import Paginator
+
+class <class_name>(PageNumberPagination):
+    # override the fields and methods
+    page_size = 2
+
+in views that support automatic pagination:
+pagination_class = Large
+
+form views that doesnt support automatic pagination:
+
+in <view_class>:
+    queryset = .....all() or filter()
+    page_number = self.request.query_params.get('page', 1)
+    page_size = self.request.query_params.get('limit', 2)
+    paginator = Paginator(queryset, page_size)
+    sre_data = <class_Serializer>(instance=paginator.page(page_number), many=True)
+    return response(sre_data.data)
