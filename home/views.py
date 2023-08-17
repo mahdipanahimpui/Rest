@@ -1,4 +1,5 @@
 # from rest_framework.decorators import api_view
+from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Person, Question, Answer
@@ -55,11 +56,27 @@ class QuestionView(APIView):
 
 
     def post(self, request):
-        pass
+        sre_data = QuestionSerializer(data=request.data)
+        if sre_data.is_valid():
+            sre_data.save() # save() is availabel because of serializersModel
+            return Response(sre_data.data, status=status.HTTP_201_CREATED)
+        return Response(sre_data.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
 
     def put(self, request, pk):
-        pass
+        question = get_object_or_404(Question, pk=pk)
+        sre_data = QuestionSerializer(instance=question, data=request.data, partial=True) # partial becaouse of update a part of obj not all
+        if sre_data.is_valid():
+            sre_data.save()
+            return Response(sre_data.data, status=status.HTTP_200_OK) 
+        return Response(sre_data.errors, status=status_HTTP_400_BAD_REQUEST)
+
 
     def delete(self, request, pk):
-        pass
+        question = get_object_or_404(Question, pk=pk)
+        id = question.id
+        question.delete()
+        return Response({'message:': f'question with id {id}'}, status=status.HTTP_200_OK)
+
 
