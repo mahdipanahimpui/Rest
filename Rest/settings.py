@@ -140,7 +140,26 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
-    ]
+    ],
+
+    # COULD ADD THROTTLE IN VIEWS
+    # 'DEFAULT_THROTTLE_CLASSES': [
+    #     'rest_framework.throttling.AnonRateThrottle',
+    #     'rest_framework.throttling.UserRateThrottle'
+    # ],
+    # 'DEFAULT_THROTTLE_RATES': {
+    #     'anon': '3/minute',
+    #     'user': '10/minute'
+    # }
+
+    # using scope instead of throttle
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.ScopedRateThrottle',
+    ],
+
+    'DEFAULT_THROTTLE_RATES': {
+        'question_throttle': '5/minute',
+    },
 }
 
 

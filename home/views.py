@@ -4,9 +4,10 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Person, Question, Answer
 from .serializers import PersonSerilizer, QuestionSerializer, AnswerSerializer
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from . permissions import IsOwnerOrReadOnly
 from rest_framework import status
+from rest_framework.throttling import UserRateThrottle, AnonRateThrottle
 
 # methods that are available
 # @api_view(['GET', 'POST', 'PUT'])
@@ -16,6 +17,7 @@ from rest_framework import status
 
 
 class Home(APIView):
+    permission_classes = [AllowAny,]
     def get(self, request): 
         # get(self, request, name) getting params from url /mahdi, in path /<str:name>
         # get the query_params ?name=mahdi
@@ -46,6 +48,9 @@ class Serializer(APIView):
 
 
 class QuestionListView(APIView):
+    # throttle_classes = [AnonRateThrottle, UserRateThrottle]
+    # throttle_scope = 'question_throttle'
+
     def get(self, request):
         questions = Question.objects.all()
         ser_data = QuestionSerializer(instance=questions, many=True)
