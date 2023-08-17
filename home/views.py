@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Person
 from .serializers import PersonSerilizer
-
+from rest_framework.permissions import IsAuthenticated
 
 # methods that are available
 # @api_view(['GET', 'POST', 'PUT'])
@@ -27,6 +27,11 @@ class Home(APIView):
 
 
 class Serializer(APIView):
+    # to see view by perm send the authorization in headers
+    # in headers:
+    #       Authorization                      Token <token_value>
+    permission_classes = [IsAuthenticated] # could use checking permissions in settings.py for all views
+
     def get(self, request):
         persons = Person.objects.all()
         # in here (instance): serializer is used to convert to json
