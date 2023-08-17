@@ -44,16 +44,16 @@ class Serializer(APIView):
 
 
 
-
-
-
-class QuestionView(APIView):
+class QuestionListView(APIView):
     def get(self, request):
         questions = Question.objects.all()
         ser_data = QuestionSerializer(instance=questions, many=True)
         return Response(ser_data.data, status=status.HTTP_200_OK)
         
 
+
+
+class QuestionCreateView(APIView):
 
     def post(self, request):
         sre_data = QuestionSerializer(data=request.data)
@@ -64,6 +64,9 @@ class QuestionView(APIView):
     
 
 
+
+class QuestionUpdateView(APIView):
+
     def put(self, request, pk):
         question = get_object_or_404(Question, pk=pk)
         sre_data = QuestionSerializer(instance=question, data=request.data, partial=True) # partial becaouse of update a part of obj not all
@@ -72,6 +75,10 @@ class QuestionView(APIView):
             return Response(sre_data.data, status=status.HTTP_200_OK) 
         return Response(sre_data.errors, status=status_HTTP_400_BAD_REQUEST)
 
+
+
+
+class QuestionDeleteView(APIView):
 
     def delete(self, request, pk):
         question = get_object_or_404(Question, pk=pk)

@@ -12,9 +12,17 @@ class PersonSerilizer(serializers.Serializer):
 
 
 class QuestionSerializer(serializers.ModelSerializer):
+    answers = serializers.SerializerMethodField()
+
     class Meta:
         model = Question
         fields = '__all__'
+
+    # method field to send other fields
+    #   mehtod name: get_<field_name>
+    def get_answers(self, obj): # obj is the Question instance
+        reslut = obj.answers.all()
+        return AnswerSerializer(instance=reslut, many=True).data
 
 
 
