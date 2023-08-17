@@ -67,7 +67,7 @@ class QuestionCreateView(APIView):
 
 
 class QuestionUpdateView(APIView):
-    permission_classes = [IsAuthenticated, IsOwnerOrReadOnly] # IsAuthenticated needs token in header, if not exsit create by url
+    permission_classes = [IsOwnerOrReadOnly] # athentication needs token in header, if not exsit create by url
 
     def put(self, request, pk):
         question = get_object_or_404(Question, pk=pk)
@@ -80,11 +80,12 @@ class QuestionUpdateView(APIView):
 
 
 
-
 class QuestionDeleteView(APIView):
-
+    permission_classes = [IsOwnerOrReadOnly] # isAuthenticated is checked in IsOwnwerOrReadOnly as a view-level perm
+    
     def delete(self, request, pk):
         question = get_object_or_404(Question, pk=pk)
+        self.check_object_permissions(request, question) # to force the instance-level to check
         id = question.id
         question.delete()
         return Response({'message:': f'question with id {id}'}, status=status.HTTP_200_OK)
