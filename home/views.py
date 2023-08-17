@@ -48,6 +48,7 @@ class Serializer(APIView):
 
 
 class QuestionListView(APIView):
+    permission_classes = [IsAuthenticated]
     # throttle_classes = [AnonRateThrottle, UserRateThrottle]
     # throttle_scope = 'question_throttle'
 
