@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
 
     # third party apps
+    'rest_framework.authtoken',
     'rest_framework',
 ]
 
@@ -144,6 +145,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ]
 }
+
 
 
 
