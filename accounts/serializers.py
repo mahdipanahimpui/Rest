@@ -33,6 +33,10 @@ class UserRegisterSerializer(serializers.ModelSerializer):
             'email': {'validators': (check_email,)}
         }
 
+    def create(self, validated_data):
+        del validated_data['confirm_password']
+        return User.objects.create_user(**validated_data)
+
     # valus is the field that is sent
     ## field level validation
     def validate_username(self, value):

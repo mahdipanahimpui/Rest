@@ -9,12 +9,7 @@ class UserRegisterView(APIView):
         # in here data is used to convert json that is posted by client to django model
         ser_data = UserRegisterSerializer(data=request.POST)
         if ser_data.is_valid():
-            vd = ser_data.validated_data # like cleaned_data
-            User.objects.create_user(
-                username=vd['username'],
-                email=vd['email'],
-                password=vd['password']
-            )
+            ser_data.create(ser_data.validated_data)  # like cleaned_data
 
             return Response(ser_data.data)
         return Response(ser_data.errors)
