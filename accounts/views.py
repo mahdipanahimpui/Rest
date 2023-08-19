@@ -84,6 +84,7 @@ class UserViewSet(viewsets.ViewSet):  # about def action see router docs
 
 
 class TestUserPagination(APIView):
+    " to test user pagination" # description in options
 
     def get(self, request):
 
